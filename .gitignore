@@ -1,3 +1,6 @@
+# Temporary scratch test scripts
+scratch/
+
 # Dependencies
 node_modules/
 /.pnp

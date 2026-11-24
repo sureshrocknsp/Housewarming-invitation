@@ -51,6 +51,17 @@ export default class ErrorBoundary extends React.Component {
               <RefreshCw className="w-4 h-4 text-turmeric" />
               <span>Reload Invitation (పేజీని రీలోడ్ చేయండి)</span>
             </button>
+
+            {this.state.error && (
+              <details className="mt-4 text-left border border-turmeric/30 rounded-lg p-2 bg-cream text-[11px] text-maroon/70">
+                <summary className="cursor-pointer font-medium font-cinzel text-maroon select-none">
+                  Technical Diagnostics
+                </summary>
+                <p className="mt-2 font-mono text-[10px] text-red-700 break-words whitespace-pre-wrap">
+                  {this.state.error.message || String(this.state.error)}
+                </p>
+              </details>
+            )}
           </div>
         </div>
       );

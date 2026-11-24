@@ -17,8 +17,20 @@ import AudioPlayer from './components/layout/AudioPlayer';
 import { Sparkles } from 'lucide-react';
 import { gruhapravesamConfig } from './config/gruhapravesamConfig';
 
+// Resilient lazy loader that gracefully retries if a chunk hash changes during live updates
+function lazyWithRetry(componentImport) {
+  return lazy(async () => {
+    try {
+      return await componentImport();
+    } catch (error) {
+      console.warn('Initial chunk load failed, retrying once...', error);
+      return await componentImport();
+    }
+  });
+}
+
 // Code-split heavy non-critical components to optimize initial page load performance
-const FamilyGallerySection = lazy(() => import('./components/gallery/FamilyGallerySection'));
+const FamilyGallerySection = lazyWithRetry(() => import('./components/gallery/FamilyGallerySection'));
 
 // Reusable elegant loading fallback for lazy sections
 function SectionLoadingFallback() {

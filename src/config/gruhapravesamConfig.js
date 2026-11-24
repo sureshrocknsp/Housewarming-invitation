@@ -8,8 +8,8 @@
  * Maps: 16.446154, 81.655852 | WhatsApp: +91 6300599958
  */
 
-import { enTranslations } from './translations/en';
-import { teTranslations } from './translations/te';
+import { enTranslations } from './translations/en.js';
+import { teTranslations } from './translations/te.js';
 
 // Primary Centralized Family & Event Configuration
 const familyConfig = {

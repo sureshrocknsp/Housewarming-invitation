@@ -14,11 +14,11 @@ export default function CountdownTimer() {
 
   useEffect(() => {
     const calculateTime = () => {
-      // Safely parse date with graceful fallback if placeholder format is used
-      const rawDate = event.date !== '[YYYY-MM-DD]' && event.date ? event.date : event.targetDate;
-      const parsedDate = new Date(rawDate.includes('T') ? rawDate : `${rawDate}T20:00:00`);
-      const target = !isNaN(parsedDate.getTime()) ? parsedDate.getTime() : new Date('2026-11-26T20:00:00').getTime();
-      const now = new Date().getTime();
+      // Auspicious Muhurtham strictly anchored to Indian Standard Time (IST, UTC+05:30)
+      // Date: 26th November 2026 at 08:00 PM IST
+      const targetIST = '2026-11-26T20:00:00+05:30';
+      const target = new Date(targetIST).getTime();
+      const now = Date.now();
       const difference = target - now;
 
       if (difference <= 0) {
@@ -37,7 +37,7 @@ export default function CountdownTimer() {
     calculateTime();
     const interval = setInterval(calculateTime, 1000);
     return () => clearInterval(interval);
-  }, [event.targetDate, event.date]);
+  }, []);
 
   const timeBlocks = [
     { label: 'Days', teluguLabel: 'రోజులు', value: timeLeft.days },

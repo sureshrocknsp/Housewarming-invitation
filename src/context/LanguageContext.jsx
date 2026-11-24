@@ -7,11 +7,24 @@ export function LanguageProvider({ children }) {
   // 'TE' (Telugu), 'EN' (English), 'BOTH' (Bilingual)
   const defaultLangSetting = (gruhapravesamConfig.settings?.defaultLanguage || 'te').toUpperCase();
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('gruhapravesam_lang') || defaultLangSetting;
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        return localStorage.getItem('gruhapravesam_lang') || defaultLangSetting;
+      }
+    } catch (e) {
+      console.warn('localStorage read warning:', e);
+    }
+    return defaultLangSetting;
   });
 
   useEffect(() => {
-    localStorage.setItem('gruhapravesam_lang', language);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('gruhapravesam_lang', language);
+      }
+    } catch (e) {
+      console.warn('localStorage write warning:', e);
+    }
   }, [language]);
 
   /**

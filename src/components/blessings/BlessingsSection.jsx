@@ -15,7 +15,10 @@ import {
   Lock,
   Check,
   ShieldCheck,
-  Home
+  Home,
+  Trash2,
+  LogOut,
+  KeyRound
 } from 'lucide-react';
 
 export default function BlessingsSection() {
@@ -36,8 +39,11 @@ export default function BlessingsSection() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
 
-  // Admin State
-  const [adminPin, setAdminPin] = useState('');
+  // Admin Authentication & Moderation State (Supabase Auth / Verified Host Session)
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+  const [adminLoggingIn, setAdminLoggingIn] = useState(false);
+  const [adminLoginError, setAdminLoginError] = useState('');
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [allBlessings, setAllBlessings] = useState([]);
 
@@ -89,20 +95,46 @@ export default function BlessingsSection() {
     }
   };
 
-  // Admin Functions
+  // Admin Authentication & Moderation Functions
   const handleUnlockAdmin = async (e) => {
     e.preventDefault();
-    if (adminPin === '1008' || adminPin === 'bonam2026') {
-      setIsAdminUnlocked(true);
-      const res = await blessingsService.getAllBlessingsForAdmin();
-      setAllBlessings(res.data || []);
-    } else {
-      alert('Invalid Family PIN. Please check with Sri B. Ramanjaneyulu.');
+    setAdminLoginError('');
+    setAdminLoggingIn(true);
+
+    try {
+      const res = await blessingsService.loginAdmin(adminEmail, adminPassword);
+      if (res.success) {
+        setIsAdminUnlocked(true);
+        const dataRes = await blessingsService.getAllBlessingsForAdmin();
+        setAllBlessings(dataRes.data || []);
+      } else {
+        setAdminLoginError(res.error || 'Authentication failed. Please verify credentials.');
+      }
+    } catch (err) {
+      setAdminLoginError('An error occurred during authentication.');
+    } finally {
+      setAdminLoggingIn(false);
     }
+  };
+
+  const handleLogoutAdmin = () => {
+    blessingsService.logoutAdmin();
+    setIsAdminUnlocked(false);
+    setAdminPassword('');
+    setAllBlessings([]);
+    setAdminLoginError('');
   };
 
   const handleUpdateStatus = async (id, status) => {
     await blessingsService.setStatus(id, status);
+    const res = await blessingsService.getAllBlessingsForAdmin();
+    setAllBlessings(res.data || []);
+    loadBlessings(); // Refresh public list
+  };
+
+  const handleDeleteBlessing = async (id) => {
+    if (!window.confirm('Are you sure you want to permanently delete this blessing?')) return;
+    await blessingsService.deleteBlessing(id);
     const res = await blessingsService.getAllBlessingsForAdmin();
     setAllBlessings(res.data || []);
     loadBlessings(); // Refresh public list
@@ -382,7 +414,8 @@ export default function BlessingsSection() {
                 onClick={() => {
                   setIsAdminModalOpen(false);
                   setIsAdminUnlocked(false);
-                  setAdminPin('');
+                  setAdminPassword('');
+                  setAdminLoginError('');
                 }}
                 className="absolute top-4 right-4 p-2 rounded-full text-maroon hover:bg-turmeric/20 transition-colors"
                 aria-label="Close"
@@ -390,44 +423,88 @@ export default function BlessingsSection() {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-2 text-maroon mb-4">
-                <ShieldCheck className="w-6 h-6 text-turmeric-dark" />
-                <h4 className="text-xl font-cinzel font-bold uppercase tracking-wide">
-                  Blessings Moderation Portal
-                </h4>
+              <div className="flex items-center justify-between text-maroon mb-4 pb-2 border-b border-turmeric/30">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-6 h-6 text-turmeric-dark" />
+                  <h4 className="text-lg sm:text-xl font-cinzel font-bold uppercase tracking-wide">
+                    Blessings Moderation Portal
+                  </h4>
+                </div>
+                {isAdminUnlocked && (
+                  <button
+                    onClick={handleLogoutAdmin}
+                    className="flex items-center gap-1.5 text-xs font-cinzel text-maroon hover:text-red-700 font-semibold px-2.5 py-1 rounded-lg border border-maroon/20 hover:border-red-400 transition-colors"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                )}
               </div>
 
               {!isAdminUnlocked ? (
-                <form onSubmit={handleUnlockAdmin} className="space-y-4 max-w-sm mx-auto text-center py-6">
-                  <div className="w-12 h-12 rounded-full bg-maroon/10 text-maroon flex items-center justify-center mx-auto">
-                    <Lock className="w-6 h-6" />
+                <form onSubmit={handleUnlockAdmin} className="space-y-4 max-w-sm mx-auto text-left py-4">
+                  <div className="w-12 h-12 rounded-full bg-maroon/10 text-maroon flex items-center justify-center mx-auto mb-2">
+                    <Lock className="w-6 h-6 text-maroon" />
                   </div>
+                  <p className="text-center text-xs font-poppins text-gray-600 mb-4">
+                    Host & Administrator Authentication via Supabase Auth
+                  </p>
+
+                  {adminLoginError && (
+                    <div className="p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs text-center">
+                      {adminLoginError}
+                    </div>
+                  )}
+
                   <div>
-                    <label className="block text-xs font-cinzel font-bold text-gray-700 uppercase mb-2">
-                      Enter Family PIN to Moderate:
+                    <label className="block text-xs font-cinzel font-bold text-gray-700 uppercase mb-1">
+                      Admin Email:
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="e.g. ramanji.bonam@gmail.com"
+                      value={adminEmail}
+                      onChange={(e) => setAdminEmail(e.target.value)}
+                      className="w-full text-sm font-poppins px-3.5 py-2 rounded-xl border border-turmeric focus:outline-none focus:ring-2 focus:ring-turmeric"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-cinzel font-bold text-gray-700 uppercase mb-1">
+                      Password:
                     </label>
                     <input
                       type="password"
-                      autoFocus
                       required
-                      placeholder="PIN (Default: 1008)"
-                      value={adminPin}
-                      onChange={(e) => setAdminPin(e.target.value)}
-                      className="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-turmeric focus:outline-none focus:ring-2 focus:ring-turmeric"
+                      placeholder="Administrator Password"
+                      value={adminPassword}
+                      onChange={(e) => setAdminPassword(e.target.value)}
+                      className="w-full text-sm font-poppins px-3.5 py-2 rounded-xl border border-turmeric focus:outline-none focus:ring-2 focus:ring-turmeric"
                     />
                   </div>
+
                   <button
                     type="submit"
-                    className="w-full py-2.5 rounded-xl bg-maroon text-cream font-cinzel text-xs font-bold uppercase tracking-wider"
+                    disabled={adminLoggingIn}
+                    className="w-full py-2.5 rounded-xl bg-maroon text-cream font-cinzel text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:bg-maroon-dark transition-colors cursor-pointer"
                   >
-                    Unlock Portal
+                    {adminLoggingIn ? (
+                      <Sparkles className="w-4 h-4 animate-spin text-turmeric" />
+                    ) : (
+                      <KeyRound className="w-4 h-4 text-turmeric" />
+                    )}
+                    <span>{adminLoggingIn ? 'Authenticating...' : 'Sign In as Administrator'}</span>
                   </button>
                 </form>
               ) : (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between text-xs font-cinzel text-gray-500 pb-2 border-b">
                     <span>Total Submitted: {allBlessings.length}</span>
-                    <span className="text-leafGreen font-bold">Authenticated</span>
+                    <span className="text-leafGreen font-bold flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      Session Active
+                    </span>
                   </div>
 
                   <div className="space-y-3">
@@ -470,11 +547,19 @@ export default function BlessingsSection() {
                             {item.approval_status !== 'rejected' && (
                               <button
                                 onClick={() => handleUpdateStatus(item.id, 'rejected')}
-                                className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[11px] font-cinzel font-bold uppercase transition-all"
+                                className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-cinzel font-bold uppercase transition-all"
                               >
                                 Reject
                               </button>
                             )}
+                            <button
+                              onClick={() => handleDeleteBlessing(item.id)}
+                              className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                              title="Delete blessing"
+                              aria-label="Delete blessing"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
                           </div>
                         </div>
                       ))

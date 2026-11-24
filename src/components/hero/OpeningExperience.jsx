@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { gruhapravesamConfig } from '../../config/gruhapravesamConfig';
 import { carnaticAudio } from '../../utils/audioEngine';
-import { BrassLamp, ThoranamGarland, DecorativeDivider, MugguCorner } from '../TraditionalMotifs';
+import { BrassLamp, ThoranamGarland, DecorativeDivider, MugguCorner, BananaTreeMotif } from '../TraditionalMotifs';
 import { Bell, Sparkles, Volume2 } from 'lucide-react';
 
 export default function OpeningExperience({ isOpen, onOpen }) {
@@ -112,21 +112,13 @@ export default function OpeningExperience({ isOpen, onOpen }) {
         </div>
       </div>
 
-      {/* LAYER 3: Natural Banana Trees */}
-      <div className="absolute left-0 bottom-0 z-20 w-20 sm:w-44 md:w-64 lg:w-80 pointer-events-none select-none animate-leaf-left opacity-85 sm:opacity-100">
-        <img
-          src="/images/banana-mango-decor.jpg"
-          alt="Fresh Green Banana Tree Decoration"
-          className="w-full h-auto object-cover object-left-bottom filter drop-shadow-[5px_0_15px_rgba(0,0,0,0.7)]"
-        />
+      {/* LAYER 3: Natural Banana Trees (Framing both sides cleanly without photo panels) */}
+      <div className="absolute left-2 sm:left-6 bottom-2 sm:bottom-6 z-20 w-16 sm:w-28 md:w-36 pointer-events-none select-none animate-leaf-left opacity-90">
+        <BananaTreeMotif className="w-full h-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)]" />
       </div>
 
-      <div className="absolute right-0 bottom-0 z-20 w-20 sm:w-44 md:w-64 lg:w-80 pointer-events-none select-none animate-leaf-right opacity-85 sm:opacity-100">
-        <img
-          src="/images/banana-mango-decor.jpg"
-          alt="Fresh Green Banana Tree Decoration"
-          className="w-full h-auto object-cover object-right-bottom transform -scale-x-100 filter drop-shadow-[-5px_0_15px_rgba(0,0,0,0.7)]"
-        />
+      <div className="absolute right-2 sm:right-6 bottom-2 sm:bottom-6 z-20 w-16 sm:w-28 md:w-36 pointer-events-none select-none animate-leaf-right opacity-90">
+        <BananaTreeMotif className="w-full h-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)]" mirror />
       </div>
 
       {/* LAYER 4: Fresh Mango Leaf & Marigold Thoranam */}
@@ -135,14 +127,14 @@ export default function OpeningExperience({ isOpen, onOpen }) {
       </div>
 
       {/* LAYER 5: Brass Deepams on Sides */}
-      <div className="hidden sm:flex absolute left-4 md:left-8 lg:left-14 bottom-10 sm:bottom-14 z-25 flex-col items-center select-none pointer-events-none">
+      <div className="hidden sm:flex absolute left-6 md:left-12 lg:left-16 bottom-10 sm:bottom-14 z-25 flex-col items-center select-none pointer-events-none">
         <BrassLamp className="w-12 sm:w-16 md:w-20 h-36 sm:h-44 md:h-52 drop-shadow-[0_0_20px_rgba(245,176,20,0.8)]" />
         <span className="text-[9px] sm:text-[10px] uppercase font-cinzel text-turmeric-light tracking-widest mt-1 bg-maroon-deep/90 px-2 py-0.5 rounded border border-turmeric/50 shadow-md">
           మంగళ దీపం
         </span>
       </div>
 
-      <div className="hidden sm:flex absolute right-4 md:right-8 lg:right-14 bottom-10 sm:bottom-14 z-25 flex-col items-center select-none pointer-events-none">
+      <div className="hidden sm:flex absolute right-6 md:right-12 lg:right-16 bottom-10 sm:bottom-14 z-25 flex-col items-center select-none pointer-events-none">
         <BrassLamp className="w-12 sm:w-16 md:w-20 h-36 sm:h-44 md:h-52 drop-shadow-[0_0_20px_rgba(245,176,20,0.8)]" />
         <span className="text-[9px] sm:text-[10px] uppercase font-cinzel text-turmeric-light tracking-widest mt-1 bg-maroon-deep/90 px-2 py-0.5 rounded border border-turmeric/50 shadow-md">
           శుభ దీపం
