@@ -5,7 +5,8 @@
 **Ceremony Date:** Thursday, 26th November 2026 | **Muhurtham:** 08:00 PM IST  
 **Venue:** Mangalaguntapalem, Rusthumbada, Narsapuram, West Godavari District, Andhra Pradesh  
 **Repository:** [github.com/sureshrocknsp/Housewarming-invitation](https://github.com/sureshrocknsp/Housewarming-invitation.git)  
-**Target Hosting:** Vercel (Edge Network)  
+**Live Production URL:** [https://housewarming-invitation-rosy.vercel.app/](https://housewarming-invitation-rosy.vercel.app/)  
+**Hosting Provider:** Vercel (Edge Network)  
 
 ---
 
