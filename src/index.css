@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #FFF8E8;
+    color: #4A140E;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Custom scrollbar in auspicious deep maroon and gold */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  @media (min-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+  }
+  ::-webkit-scrollbar-track {
+    background: #FFF8E8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #D6A437, #641E16);
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8B1E1E;
+  }
+}
+
+/* Custom traditional decorative components */
+@layer components {
+  /* Rich Gold Text Gradient */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #F9D976 0%, #D6A437 50%, #A67C1E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Royal Maroon Text Gradient */
+  .text-maroon-gradient {
+    background: linear-gradient(135deg, #8B1E1E 0%, #641E16 60%, #3A0E0A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Traditional Brass/Gold Metallic Border */
+  .border-gold-metallic {
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #B8863B, #F3C356, #D6A437, #F3C356, #B8863B) 1;
+  }
+
+  /* Traditional Gadapa (Door threshold) styling with Pasupu & Kumkuma */
+  .gadapa-threshold {
+    background: linear-gradient(180deg, #E6A119 0%, #C9820A 100%);
+    box-shadow: 0 4px 15px rgba(100, 30, 22, 0.3);
+  }
+
+  /* Traditional Card Frame with ornamental corners */
+  .traditional-card {
+    background: rgba(255, 248, 232, 0.95);
+    border: 1.5px solid rgba(214, 164, 55, 0.5);
+    position: relative;
+    box-shadow: 0 10px 30px -5px rgba(100, 30, 22, 0.12), 0 0 15px rgba(214, 164, 55, 0.1);
+  }
+
+  /* Subtle Kolam / Muggu Dot Pattern Overlay */
+  .bg-muggu-pattern {
+    background-image: radial-gradient(rgba(214, 164, 55, 0.22) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+  }
+
+  /* 3D Door Perspective & Transition Classes (Phase 4) */
+  .perspective-portal {
+    perspective: 1400px;
+    perspective-origin: 50% 50%;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .door-hinge-left {
+    transform-origin: left center;
+    transition: transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 1.5s ease;
+  }
+
+  .door-hinge-right {
+    transform-origin: right center;
+    transition: transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 1.5s ease;
+  }
+
+  .door-open-left-state {
+    transform: perspective(1400px) rotateY(-96deg);
+    box-shadow: -15px 0 35px rgba(0, 0, 0, 0.6);
+  }
+
+  .door-open-right-state {
+    transform: perspective(1400px) rotateY(96deg);
+    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Keyframes for natural gentle breathing of lamps and elements */
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 12px rgba(255, 170, 0, 0.9));
+  }
+  25% {
+    transform: scale(1.08, 0.94) rotate(-2deg);
+    filter: drop-shadow(0 0 18px rgba(255, 120, 0, 0.95));
+  }
+  50% {
+    transform: scale(0.95, 1.06) rotate(1.5deg);
+    filter: drop-shadow(0 0 14px rgba(255, 200, 0, 0.9));
+  }
+  75% {
+    transform: scale(1.05, 0.97) rotate(-1deg);
+    filter: drop-shadow(0 0 20px rgba(255, 150, 0, 0.95));
+  }
+}
+
+.animate-flame {
+  animation: flameFlicker 2s ease-in-out infinite;
+}
+
+@keyframes slowGarlandSway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+.animate-garland {
+  animation: slowGarlandSway 8s ease-in-out infinite alternate;
+}
+
+@keyframes bananaLeafSwayLeft {
+  0%, 100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  50% {
+    transform: rotate(-1.5deg) skewX(-1deg);
+  }
+}
+
+@keyframes bananaLeafSwayRight {
+  0%, 100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  50% {
+    transform: rotate(1.5deg) skewX(1deg);
+  }
+}
+
+.animate-leaf-left {
+  animation: bananaLeafSwayLeft 6s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+.animate-leaf-right {
+  animation: bananaLeafSwayRight 6.5s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+@keyframes warmSunlightRays {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+
+.animate-sunlight {
+  animation: warmSunlightRays 6s ease-in-out infinite;
+}
+
+/* Accessibility: Respect User Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .door-hinge-left, .door-hinge-right {
+    transition: opacity 0.5s ease !important;
+  }
+  .door-open-left-state, .door-open-right-state {
+    transform: none !important;
+    opacity: 0 !important;
+  }
+}
+
+/* Print Stylesheet for High Quality Clean PDF Export */
+@media print {
+  header,
+  footer button,
+  .fixed,
+  canvas,
+  #rsvp form,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  body {
+    background: #FFF8E8 !important;
+    color: #4A140E !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #invitation-card {
+    padding: 0 !important;
+    page-break-after: always;
+  }
+
+  #invitation-card > div {
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: 3px double #D6A437 !important;
+  }
+}

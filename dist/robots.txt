@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /#/admin/
+
+# Host & Sitemap
+Sitemap: https://gruhapravesam.kandula.family/sitemap.xml

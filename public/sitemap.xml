@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://gruhapravesam.kandula.family/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://gruhapravesam.kandula.family/images/traditional-entrance.jpg</image:loc>
+      <image:title>Traditional Telugu Gruhapravesam Entrance</image:title>
+      <image:caption>Sri Venkateswara Nilayam Gruhapravesam Ceremony</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://gruhapravesam.kandula.family/images/carved-teak-door.jpg</image:loc>
+      <image:title>Carved Teakwood Simhadwaram</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://gruhapravesam.kandula.family/images/family-portrait.jpg</image:loc>
+      <image:title>Kandula Family Festive Portrait</image:title>
+    </image:image>
+  </url>
+</urlset>
