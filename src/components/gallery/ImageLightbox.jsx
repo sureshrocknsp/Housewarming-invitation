@@ -141,7 +141,7 @@ export default function ImageLightbox({
           </div>
         ) : (
           <img
-            src={currentItem.src}
+            src={currentItem.image || currentItem.src}
             alt={currentItem.alt || currentItem.title}
             onLoad={() => setIsImgLoaded(true)}
             onError={() => setImgError(true)}

@@ -88,7 +88,7 @@ export default function FamilyGallerySection() {
                   <span className={activeCategory === cat.id ? 'text-turmeric' : 'text-turmeric-dark'}>
                     {getCategoryIcon(cat.icon)}
                   </span>
-                  <span>{cat.name}</span>
+                  <span>{isTelugu ? (cat.teluguLabel || cat.label) : (cat.label || cat.name)}</span>
                   <span
                     className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                       activeCategory === cat.id
@@ -115,7 +115,7 @@ export default function FamilyGallerySection() {
               {/* Image Frame */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-soft">
                 <img
-                  src={item.src}
+                  src={item.image || item.src}
                   alt={item.title}
                   loading="lazy"
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
