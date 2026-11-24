@@ -76,6 +76,30 @@
     box-shadow: 0 10px 30px -5px rgba(100, 30, 22, 0.12), 0 0 15px rgba(214, 164, 55, 0.1);
   }
 
+  /* Royal Parchment Card */
+  .card-parchment {
+    background: #FFFDF7;
+    border: 2px solid rgba(214, 164, 55, 0.75);
+    border-radius: 1.5rem;
+    box-shadow: 0 16px 48px -12px rgba(74, 20, 14, 0.18), 0 0 20px rgba(214, 164, 55, 0.12);
+    position: relative;
+  }
+
+  /* Gold Foil Border Inset */
+  .gold-foil-inset {
+    border: 1px solid rgba(214, 164, 55, 0.45);
+    border-radius: 1rem;
+  }
+
+  /* Accessible Touch Target */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* Subtle Kolam / Muggu Dot Pattern Overlay */
   .bg-muggu-pattern {
     background-image: radial-gradient(rgba(214, 164, 55, 0.22) 1.5px, transparent 1.5px);

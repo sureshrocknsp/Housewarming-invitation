@@ -16,8 +16,8 @@ export default function CountdownTimer() {
     const calculateTime = () => {
       // Safely parse date with graceful fallback if placeholder format is used
       const rawDate = event.date !== '[YYYY-MM-DD]' && event.date ? event.date : event.targetDate;
-      const parsedDate = new Date(rawDate);
-      const target = !isNaN(parsedDate.getTime()) ? parsedDate.getTime() : new Date('2026-11-28T05:42:00').getTime();
+      const parsedDate = new Date(rawDate.includes('T') ? rawDate : `${rawDate}T20:00:00`);
+      const target = !isNaN(parsedDate.getTime()) ? parsedDate.getTime() : new Date('2026-11-26T20:00:00').getTime();
       const now = new Date().getTime();
       const difference = target - now;
 

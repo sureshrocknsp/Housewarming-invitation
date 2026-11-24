@@ -1,24 +1,24 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
-import ErrorBoundary from './components/ErrorBoundary';
-import Navbar from './components/Navbar';
-import OpeningExperience from './components/OpeningExperience';
+import ErrorBoundary from './components/ui/ErrorBoundary';
+import Navbar from './components/layout/Navbar';
+import OpeningExperience from './components/hero/OpeningExperience';
 import CountdownTimer from './components/CountdownTimer';
-import MainInvitation from './components/MainInvitation';
-import FamilyDetails from './components/FamilyDetails';
+import MainInvitation from './components/invitation/MainInvitation';
+import FamilyDetails from './components/family/FamilyDetails';
 import TraditionalShowcase from './components/TraditionalShowcase';
-import EventSchedule from './components/EventSchedule';
-import RitualsGuide from './components/RitualsGuide';
-import VenueLocation from './components/VenueLocation';
-import RsvpSection from './components/RsvpSection';
-import Footer from './components/Footer';
-import FallingPetals from './components/FallingPetals';
-import AudioPlayer from './components/AudioPlayer';
+import EventSchedule from './components/events/EventSchedule';
+import RitualsGuide from './components/events/RitualsGuide';
+import VenueLocation from './components/venue/VenueLocation';
+import BlessingsSection from './components/blessings/BlessingsSection';
+import Footer from './components/layout/Footer';
+import FallingPetals from './components/layout/FallingPetals';
+import AudioPlayer from './components/layout/AudioPlayer';
 import { Sparkles } from 'lucide-react';
 import { gruhapravesamConfig } from './config/gruhapravesamConfig';
 
 // Code-split heavy non-critical components to optimize initial page load performance
-const FamilyGallerySection = lazy(() => import('./components/FamilyGallerySection'));
+const FamilyGallerySection = lazy(() => import('./components/gallery/FamilyGallerySection'));
 
 // Reusable elegant loading fallback for lazy sections
 function SectionLoadingFallback() {
@@ -109,8 +109,8 @@ export default function App() {
             {/* Phase 8: Guest Welcome & Venue Location */}
             <VenueLocation />
 
-            {/* Sacred Guest Blessings Message Section */}
-            <RsvpSection />
+            {/* Sacred Guest Blessings from Well-Wishers */}
+            <BlessingsSection />
           </main>
 
           {/* Auspicious Footer */}

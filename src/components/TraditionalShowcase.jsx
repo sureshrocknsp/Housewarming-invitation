@@ -1,34 +1,27 @@
 import React, { useState } from 'react';
-import { invitationConfig } from '../config/invitationConfig';
+import { gruhapravesamConfig } from '../config/gruhapravesamConfig';
 import { useLanguage } from '../context/LanguageContext';
-import { DecorativeDivider, MugguCorner } from './TraditionalMotifs';
-import { Sparkles, Eye, Check, Flower2 } from 'lucide-react';
+import SectionHeader from './ui/SectionHeader';
+import { Eye, Check, Flower2, Sparkles, X } from 'lucide-react';
 
 export default function TraditionalShowcase() {
-  const { decorativeShowcases } = invitationConfig;
+  const { decorativeShowcases } = gruhapravesamConfig;
   const { language } = useLanguage();
-  const [selectedItem, setSelectedItem] = useState(decorativeShowcases[0]);
+  const [selectedItem, setSelectedItem] = useState(decorativeShowcases ? decorativeShowcases[0] : null);
   const [modalImage, setModalImage] = useState(null);
 
+  if (!decorativeShowcases || decorativeShowcases.length === 0) return null;
+
   return (
-    <section id="traditions" className="relative py-16 px-4 bg-cream-soft border-t border-b border-turmeric/30">
+    <section id="traditions" className="relative py-14 sm:py-20 px-3 sm:px-6 bg-cream-soft border-t border-b border-turmeric/30">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-turmeric/20 border border-turmeric text-maroon text-xs font-cinzel font-bold tracking-wider uppercase mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-turmeric-dark" />
-            <span>Ceremonial Aesthetics</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-telugu font-bold text-maroon mb-2">
-            సాంప్రదాయ అలంకరణ విశేషాలు
-          </h2>
-          <p className="text-xs sm:text-sm font-cinzel tracking-widest text-antiqueGold font-bold uppercase">
-            Sacred Decorative Traditions & Spiritual Significance
-          </p>
-
-          <DecorativeDivider className="my-4 max-w-xs" />
-        </div>
+        <SectionHeader
+          badgeIcon={Sparkles}
+          badgeText="Ceremonial Aesthetics"
+          teluguHeading="సాంప్రదాయ అలంకరణ విశేషాలు"
+          englishSubtitle="Sacred Decorative Traditions & Spiritual Significance"
+        />
 
         {/* Interactive Selector Pill Bar */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
